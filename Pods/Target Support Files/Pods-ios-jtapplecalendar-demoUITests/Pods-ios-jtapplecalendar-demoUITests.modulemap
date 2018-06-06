@@ -1,0 +1,6 @@
+framework module Pods_ios_jtapplecalendar_demoUITests {
+  umbrella header "Pods-ios-jtapplecalendar-demoUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
