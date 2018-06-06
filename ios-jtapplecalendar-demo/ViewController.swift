@@ -19,11 +19,33 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        // MARK: Initialization
+        scrollToDateToday()
+        setUpVisibleDates()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Render Calendar
+    private func scrollToDateToday(){
+        calendarView.scrollToDate(Date())
+    }
+    
+    private func setUpVisibleDates(){
+        calendarView.visibleDates { (visibleDates) in
+            self.setUpCalendarViews(from: visibleDates)
+        }
+    }
+    
+    private func setUpCalendarViews(from visibleDates: DateSegmentInfo){
+        let date = visibleDates.monthDates.first!.date
+        formatter.dateFormat = "yyyy"
+        print("Year: \(formatter.string(from: date))")
+        formatter.dateFormat = "MMMM"
+        print("Month: \(formatter.string(from: date))")
     }
 
 }
@@ -57,14 +79,38 @@ extension ViewController: JTAppleCalendarViewDataSource{
 
 // JTAppleCalendarViewDelegate Protocol
 extension ViewController: JTAppleCalendarViewDelegate{
-    // MARK
+    // MARK: - Important
+    // More on willDisplay requirement https://github.com/patchthecode/JTAppleCalendar/issues/553
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         //
     }
     
+    // Individual calendar cell instance
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
         cell.dateLabel.text = cellState.text
         return cell
+    }
+    
+    // Scroll identifier
+    func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
+        setUpCalendarViews(from: visibleDates)
+    }
+    
+    // Header event on date change
+    func calendar(_ calendar: JTAppleCalendarView, headerViewForDateRange range: (start: Date, end: Date), at indexPath: IndexPath) -> JTAppleCollectionReusableView {
+        let header = calendar.dequeueReusableJTAppleSupplementaryView(withReuseIdentifier: "CalendarHeader", for: indexPath) as! CalendarHeader
+        formatter.dateFormat = "YYYY"
+        header.lbYear.text = formatter.string(from: range.start).uppercased()
+        formatter.dateFormat = "MMMM"
+        header.lbMonth.text = formatter.string(from: range.start).uppercased()
+        
+        return header
+    }
+    
+    // MARK: - Important
+    // Requirement to make header from the previously set method visible
+    func calendarSizeForMonths(_ calendar: JTAppleCalendarView?) -> MonthSize? {
+        return MonthSize(defaultSize: 50)
     }
 }
