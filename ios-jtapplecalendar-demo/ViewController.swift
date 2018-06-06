@@ -49,7 +49,7 @@ class ViewController: UIViewController {
         print("Month: \(formatter.string(from: date))")
     }
     
-    private func validateCellTextColor(view: JTAppleCell?, cellState: CellState) {
+    private func renderCellTextColor(view: JTAppleCell?, cellState: CellState) {
         guard let validCell = view as? CalendarCell else { return }
         formatter.dateFormat = "yyyy MM dd"
         if formatter.string(from: Date()) == formatter.string(from: cellState.date) && cellState.dateBelongsTo == .thisMonth {
@@ -68,6 +68,16 @@ class ViewController: UIViewController {
                     validCell.dateLabel.textColor = Color.OUTSIDE_MONTH
                 }
             }
+        }
+    }
+    
+    private func renderCellSelected(view: JTAppleCell?, cellState: CellState) {
+        guard let validCell = view as? CalendarCell else { return }
+        if cellState.isSelected && cellState.dateBelongsTo == .thisMonth {
+            validCell.vSelected.isHidden = false
+        }else{
+            validCell.vSelected.isHidden = true
+            validCell.backgroundColor = UIColor.clear
         }
     }
 }
@@ -104,7 +114,8 @@ extension ViewController: JTAppleCalendarViewDelegate{
     // MARK: - Important
     // More on willDisplay requirement https://github.com/patchthecode/JTAppleCalendar/issues/553
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        validateCellTextColor(view: cell, cellState: cellState)
+        renderCellSelected(view: cell, cellState: cellState)
+        renderCellTextColor(view: cell, cellState: cellState)
         cell.layoutIfNeeded()
     }
     
@@ -113,7 +124,8 @@ extension ViewController: JTAppleCalendarViewDelegate{
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
         cell.dateLabel.text = cellState.text
         
-        validateCellTextColor(view: cell, cellState: cellState)
+        renderCellSelected(view: cell, cellState: cellState)
+        renderCellTextColor(view: cell, cellState: cellState)
         
         return cell
     }
@@ -142,6 +154,12 @@ extension ViewController: JTAppleCalendarViewDelegate{
     
     // MARK: - User Events
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        validateCellTextColor(view: cell, cellState: cellState)
+        renderCellSelected(view: cell, cellState: cellState)
+        renderCellTextColor(view: cell, cellState: cellState)
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        renderCellSelected(view: cell, cellState: cellState)
+        renderCellTextColor(view: cell, cellState: cellState)
     }
 }

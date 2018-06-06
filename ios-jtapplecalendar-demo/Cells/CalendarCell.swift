@@ -11,4 +11,12 @@ import JTAppleCalendar
 
 class CalendarCell: JTAppleCell {
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var vSelected: UIView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        // MARK: - Render UI
+        vSelected.layer.cornerRadius = vSelected.frame.height / 2
+    }
 }

@@ -38,8 +38,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D0r-Di-03M">
+                                                    <rect key="frame" x="25.5" y="25.5" width="50" height="50"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.85098039219999999" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="4oJ-Pf-yKO"/>
+                                                        <constraint firstAttribute="height" constant="50" id="VRc-RK-ECl"/>
+                                                    </constraints>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PIH-1A-mue">
-                                                    <rect key="frame" x="28.5" y="39" width="43" height="23.5"/>
+                                                    <rect key="frame" x="28" y="39" width="43" height="23.5"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -49,9 +57,12 @@
                                         <constraints>
                                             <constraint firstItem="PIH-1A-mue" firstAttribute="centerY" secondItem="2FJ-CS-NSr" secondAttribute="centerY" id="2yG-ay-d0u"/>
                                             <constraint firstItem="PIH-1A-mue" firstAttribute="centerX" secondItem="2FJ-CS-NSr" secondAttribute="centerX" id="9dd-5P-Qot"/>
+                                            <constraint firstItem="D0r-Di-03M" firstAttribute="centerX" secondItem="2FJ-CS-NSr" secondAttribute="centerX" id="Doj-hE-PCD"/>
+                                            <constraint firstItem="D0r-Di-03M" firstAttribute="centerY" secondItem="2FJ-CS-NSr" secondAttribute="centerY" id="Jpm-Iy-D2N"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="dateLabel" destination="PIH-1A-mue" id="DjT-yc-bXW"/>
+                                            <outlet property="vSelected" destination="D0r-Di-03M" id="2QR-Yj-g2k"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
