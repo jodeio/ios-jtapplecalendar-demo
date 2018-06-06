@@ -156,10 +156,14 @@ extension ViewController: JTAppleCalendarViewDelegate{
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         renderCellSelected(view: cell, cellState: cellState)
         renderCellTextColor(view: cell, cellState: cellState)
+        
+        cell?.bounce()
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         renderCellSelected(view: cell, cellState: cellState)
         renderCellTextColor(view: cell, cellState: cellState)
+        
+        cell?.bounce()
     }
 }

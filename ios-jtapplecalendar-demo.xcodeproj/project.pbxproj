@@ -19,6 +19,7 @@
 		637E7C9820C7D076007BC3D1 /* CalendarHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637E7C9720C7D076007BC3D1 /* CalendarHeader.swift */; };
 		637E7C9B20C7D948007BC3D1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637E7C9A20C7D948007BC3D1 /* UIColor.swift */; };
 		637E7C9E20C7DA2A007BC3D1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637E7C9D20C7DA2A007BC3D1 /* Color.swift */; };
+		637E7CA020C7DF4E007BC3D1 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637E7C9F20C7DF4E007BC3D1 /* UIView.swift */; };
 		78984DE2B52F63DDED78EBB9 /* Pods_ios_jtapplecalendar_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F867C393342BB533421FAA /* Pods_ios_jtapplecalendar_demo.framework */; };
 		A8718801F46A7CD500820AD3 /* Pods_ios_jtapplecalendar_demoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494691FB2A04B548F1BE6FD8 /* Pods_ios_jtapplecalendar_demoUITests.framework */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		637E7C9720C7D076007BC3D1 /* CalendarHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeader.swift; sourceTree = "<group>"; };
 		637E7C9A20C7D948007BC3D1 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		637E7C9D20C7DA2A007BC3D1 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		637E7C9F20C7DF4E007BC3D1 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		92F867C393342BB533421FAA /* Pods_ios_jtapplecalendar_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_jtapplecalendar_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96B53074B60708D5EF2C83E9 /* Pods-ios-jtapplecalendar-demoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-jtapplecalendar-demoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-jtapplecalendar-demoUITests/Pods-ios-jtapplecalendar-demoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -176,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				637E7C9A20C7D948007BC3D1 /* UIColor.swift */,
+				637E7C9F20C7DF4E007BC3D1 /* UIView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				637E7C6520C7A8A2007BC3D1 /* ViewController.swift in Sources */,
 				637E7C9E20C7DA2A007BC3D1 /* Color.swift in Sources */,
 				637E7C9520C7C4FA007BC3D1 /* CalendarCell.swift in Sources */,
+				637E7CA020C7DF4E007BC3D1 /* UIView.swift in Sources */,
 				637E7C9820C7D076007BC3D1 /* CalendarHeader.swift in Sources */,
 				637E7C6320C7A8A2007BC3D1 /* AppDelegate.swift in Sources */,
 				637E7C9B20C7D948007BC3D1 /* UIColor.swift in Sources */,
