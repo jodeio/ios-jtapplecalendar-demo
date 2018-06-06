@@ -15,6 +15,7 @@
 		637E7C6D20C7A8A3007BC3D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 637E7C6B20C7A8A3007BC3D1 /* LaunchScreen.storyboard */; };
 		637E7C7820C7A8A4007BC3D1 /* ios_jtapplecalendar_demoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637E7C7720C7A8A4007BC3D1 /* ios_jtapplecalendar_demoTests.swift */; };
 		637E7C8320C7A8A4007BC3D1 /* ios_jtapplecalendar_demoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637E7C8220C7A8A4007BC3D1 /* ios_jtapplecalendar_demoUITests.swift */; };
+		637E7C9520C7C4FA007BC3D1 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637E7C9420C7C4FA007BC3D1 /* CalendarCell.swift */; };
 		78984DE2B52F63DDED78EBB9 /* Pods_ios_jtapplecalendar_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F867C393342BB533421FAA /* Pods_ios_jtapplecalendar_demo.framework */; };
 		A8718801F46A7CD500820AD3 /* Pods_ios_jtapplecalendar_demoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494691FB2A04B548F1BE6FD8 /* Pods_ios_jtapplecalendar_demoUITests.framework */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		637E7C7E20C7A8A4007BC3D1 /* ios-jtapplecalendar-demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-jtapplecalendar-demoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		637E7C8220C7A8A4007BC3D1 /* ios_jtapplecalendar_demoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_jtapplecalendar_demoUITests.swift; sourceTree = "<group>"; };
 		637E7C8420C7A8A4007BC3D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		637E7C9420C7C4FA007BC3D1 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		92F867C393342BB533421FAA /* Pods_ios_jtapplecalendar_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_jtapplecalendar_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96B53074B60708D5EF2C83E9 /* Pods-ios-jtapplecalendar-demoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-jtapplecalendar-demoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-jtapplecalendar-demoUITests/Pods-ios-jtapplecalendar-demoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,6 +126,7 @@
 		637E7C6120C7A8A2007BC3D1 /* ios-jtapplecalendar-demo */ = {
 			isa = PBXGroup;
 			children = (
+				637E7C9620C7C5A0007BC3D1 /* Cells */,
 				637E7C6220C7A8A2007BC3D1 /* AppDelegate.swift */,
 				637E7C6420C7A8A2007BC3D1 /* ViewController.swift */,
 				637E7C6620C7A8A2007BC3D1 /* Main.storyboard */,
@@ -150,6 +153,14 @@
 				637E7C8420C7A8A4007BC3D1 /* Info.plist */,
 			);
 			path = "ios-jtapplecalendar-demoUITests";
+			sourceTree = "<group>";
+		};
+		637E7C9620C7C5A0007BC3D1 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				637E7C9420C7C4FA007BC3D1 /* CalendarCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		9390416A0DB2306DE3CE6117 /* Pods */ = {
@@ -456,6 +467,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				637E7C6520C7A8A2007BC3D1 /* ViewController.swift in Sources */,
+				637E7C9520C7C4FA007BC3D1 /* CalendarCell.swift in Sources */,
 				637E7C6320C7A8A2007BC3D1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,7 +645,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N5QVM7PTAP;
 				INFOPLIST_FILE = "ios-jtapplecalendar-demo/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.xrojan.ios-jtapplecalendar-demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -649,7 +664,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N5QVM7PTAP;
 				INFOPLIST_FILE = "ios-jtapplecalendar-demo/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.xrojan.ios-jtapplecalendar-demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -666,7 +684,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N5QVM7PTAP;
 				INFOPLIST_FILE = "ios-jtapplecalendar-demoTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.xrojan.ios-jtapplecalendar-demoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -684,7 +706,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N5QVM7PTAP;
 				INFOPLIST_FILE = "ios-jtapplecalendar-demoTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.xrojan.ios-jtapplecalendar-demoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -701,7 +727,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N5QVM7PTAP;
 				INFOPLIST_FILE = "ios-jtapplecalendar-demoUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.xrojan.ios-jtapplecalendar-demoUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -718,7 +748,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N5QVM7PTAP;
 				INFOPLIST_FILE = "ios-jtapplecalendar-demoUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.xrojan.ios-jtapplecalendar-demoUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
