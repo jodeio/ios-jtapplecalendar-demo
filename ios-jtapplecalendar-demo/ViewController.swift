@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     // MARK: - Variable declaration
     let formatter = DateFormatter()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -47,7 +48,28 @@ class ViewController: UIViewController {
         formatter.dateFormat = "MMMM"
         print("Month: \(formatter.string(from: date))")
     }
-
+    
+    private func validateCellTextColor(view: JTAppleCell?, cellState: CellState) {
+        guard let validCell = view as? CalendarCell else { return }
+        formatter.dateFormat = "yyyy MM dd"
+        if formatter.string(from: Date()) == formatter.string(from: cellState.date) && cellState.dateBelongsTo == .thisMonth {
+            validCell.dateLabel.textColor = Color.TODAY
+        } else if cellState.date < Date() && cellState.dateBelongsTo == .thisMonth{
+            validCell.dateLabel.textColor = UIColor.init(rgb: 0xbdc3c7)
+        }else {
+            if cellState.isSelected {
+                if cellState.dateBelongsTo == .thisMonth {
+                    validCell.dateLabel.textColor = Color.SELECTED_MONTH
+                }
+            } else {
+                if cellState.dateBelongsTo == .thisMonth {
+                    validCell.dateLabel.textColor = Color.SELECTED_MONTH
+                } else {
+                    validCell.dateLabel.textColor = Color.OUTSIDE_MONTH
+                }
+            }
+        }
+    }
 }
 
 // MARK: Additional protocol classes
@@ -82,13 +104,17 @@ extension ViewController: JTAppleCalendarViewDelegate{
     // MARK: - Important
     // More on willDisplay requirement https://github.com/patchthecode/JTAppleCalendar/issues/553
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        //
+        validateCellTextColor(view: cell, cellState: cellState)
+        cell.layoutIfNeeded()
     }
     
     // Individual calendar cell instance
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
         cell.dateLabel.text = cellState.text
+        
+        validateCellTextColor(view: cell, cellState: cellState)
+        
         return cell
     }
     
@@ -112,5 +138,10 @@ extension ViewController: JTAppleCalendarViewDelegate{
     // Requirement to make header from the previously set method visible
     func calendarSizeForMonths(_ calendar: JTAppleCalendarView?) -> MonthSize? {
         return MonthSize(defaultSize: 50)
+    }
+    
+    // MARK: - User Events
+    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        validateCellTextColor(view: cell, cellState: cellState)
     }
 }
