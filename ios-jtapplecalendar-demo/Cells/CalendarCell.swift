@@ -18,8 +18,5 @@ class CalendarCell: JTAppleCell {
         super.awakeFromNib()
         
         // MARK: - Render UI
-        vSelected.layer.masksToBounds = false
-        vSelected.layer.cornerRadius = 10
-        vSelected.clipsToBounds = true
     }
 }

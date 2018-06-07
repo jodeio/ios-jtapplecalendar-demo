@@ -12,10 +12,12 @@ import JTAppleCalendar
 class ViewController: UIViewController {
     // MARK: - Outlet declaration
     @IBOutlet weak var calendarView: JTAppleCalendarView!
+    @IBOutlet weak var tvEvents: UITableView!
     
     // MARK: - Variable declaration
-    //var events = [String]()
-    var events = ["2018/06/04","2018/06/07","2018/06/08","2018/06/10","2018/07/10"]
+    // var events = [String]()
+    // var events = ["2018/06/04","2018/06/07","2018/06/08","2018/06/10","2018/07/10"]
+    var events = [[Event]]()
     let formatter = DateFormatter()
     
     
@@ -36,7 +38,16 @@ class ViewController: UIViewController {
     // MARK: - Event Population
     private func populateEvents(){
         // Local events assigning
-        events = ["2018/06/04","2018/06/07","2018/06/08","2018/06/10"]
+        formatter.dateFormat = "yyyy/MM/dd"
+        events.append([
+                    Event(name: "Independence Day", date: formatter.date(from: "2018/06/12"), type: Keys.HOLIDAY),
+                    Event(name: "Mark's Birthday", date: formatter.date(from: "2018/06/12"), type: Keys.BIRTHDAY)
+                ]
+            )
+        events.append([
+                    Event(name: "Eid al Fitr", date: formatter.date(from: "2018/06/15"), type: Keys.SPECIAL_HOLIDAY)
+                ]
+            )
         
         // You can call your api to append dates to the events array here
         // Be minded with the format
@@ -66,13 +77,15 @@ class ViewController: UIViewController {
         formatter.dateFormat = "yyyy MM dd"
         if formatter.string(from: Date()) == formatter.string(from: cellState.date) && cellState.dateBelongsTo == .thisMonth {
             validCell.dateLabel.textColor = Color.TODAY
-        } else if cellState.date < Date() && cellState.dateBelongsTo == .thisMonth{
-            validCell.dateLabel.textColor = UIColor.init(rgb: 0xbdc3c7)
+        } else if cellState.date < Date() && cellState.dateBelongsTo == .thisMonth {
+            if cellState.isSelected {
+                validCell.dateLabel.textColor = UIColor.white
+            }else{
+                validCell.dateLabel.textColor = Color.OUTSIDE_MONTH
+            }
         }else {
             if cellState.isSelected {
-                if cellState.dateBelongsTo == .thisMonth {
-                    validCell.dateLabel.textColor = Color.SELECTED_MONTH
-                }
+                validCell.dateLabel.textColor = UIColor.white
             } else {
                 if cellState.dateBelongsTo == .thisMonth {
                     validCell.dateLabel.textColor = Color.SELECTED_MONTH
@@ -85,9 +98,10 @@ class ViewController: UIViewController {
     
     private func renderCellSelected(view: JTAppleCell?, cellState: CellState) {
         guard let validCell = view as? CalendarCell else { return }
-        if cellState.isSelected && cellState.dateBelongsTo == .thisMonth {
+        if cellState.isSelected {
             validCell.vSelected.isHidden = false
-        }else{
+        }
+        else{
             validCell.vSelected.isHidden = true
             validCell.backgroundColor = UIColor.clear
         }
@@ -96,13 +110,31 @@ class ViewController: UIViewController {
     private func renderCellEvents(view: JTAppleCell, cellState: CellState){
         guard let validCell = view as? CalendarCell else { return }
         formatter.dateFormat = "yyyy/MM/dd"
+        // let index = getEventDateIndex(date: cellState.date)
         if(events.count > 0){
-            if(events.contains(formatter.string(from: cellState.date))){
+            // FIXME: - Replace 0 by index when fixed
+            if(events.contains { $0[0].date == cellState.date }){
                 validCell.vEventIndicator.isHidden = false
+                
+                // Add ons: Check event type here
             }else{
                 validCell.vEventIndicator.isHidden = true
             }
         }
+    }
+    
+    // FIXME: - Validate index retrieval
+    private func getEventDateIndex(date: Date) -> Int{
+        var index = 0
+        for i in 0..<events.count{
+            for j in 0..<events[i].count{
+                if(events[i][j].date == date){
+                    index = i
+                    break
+                }
+            }
+        }
+        return index
     }
 }
 
@@ -193,5 +225,28 @@ extension ViewController: JTAppleCalendarViewDelegate{
         renderCellTextColor(view: cell, cellState: cellState)
         
         cell?.bounce()
+    }
+}
+
+// TableViewDelegateProtocol
+extension ViewController: UITableViewDelegate{
+    
+}
+
+// TableViewDataSourceProtocol
+extension ViewController: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // FIXME: - Replace 0 by index when fixed
+        return events[0].count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as! EventTableViewCell
+        
+        return cell
     }
 }
