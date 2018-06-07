@@ -12,6 +12,7 @@ import JTAppleCalendar
 class CalendarCell: JTAppleCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var vSelected: UIView!
+    @IBOutlet weak var vEventIndicator: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -15,4 +15,5 @@ class Color {
     static let CURRENT_DATE_VIEW = UIColor.init(rgb:0x1abc9c)
     static let RANGE_VIEW = UIColor.init(rgb:0xfee9cf)
     static let TODAY = UIColor.init(rgb:0xf1c40f)
+    static let BACKGROUND_COLOR = UIColor.init(rgb:0x1abc9c)
 }

@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     
     // MARK: - Variable declaration
+    //var events = [String]()
+    var events = ["2018/06/04","2018/06/07","2018/06/08","2018/06/10","2018/07/10"]
     let formatter = DateFormatter()
     
     
@@ -21,6 +23,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         // MARK: Initialization
+        populateEvents()
         scrollToDateToday()
         setUpVisibleDates()
     }
@@ -28,6 +31,15 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Event Population
+    private func populateEvents(){
+        // Local events assigning
+        events = ["2018/06/04","2018/06/07","2018/06/08","2018/06/10"]
+        
+        // You can call your api to append dates to the events array here
+        // Be minded with the format
     }
     
     // MARK: - Render Calendar
@@ -80,6 +92,18 @@ class ViewController: UIViewController {
             validCell.backgroundColor = UIColor.clear
         }
     }
+    
+    private func renderCellEvents(view: JTAppleCell, cellState: CellState){
+        guard let validCell = view as? CalendarCell else { return }
+        formatter.dateFormat = "yyyy/MM/dd"
+        if(events.count > 0){
+            if(events.contains(formatter.string(from: cellState.date))){
+                validCell.vEventIndicator = true
+            }else{
+                validCell.vEventIndicator = false
+            }
+        }
+    }
 }
 
 // MARK: Additional protocol classes
@@ -114,8 +138,11 @@ extension ViewController: JTAppleCalendarViewDelegate{
     // MARK: - Important
     // More on willDisplay requirement https://github.com/patchthecode/JTAppleCalendar/issues/553
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
+        
         renderCellSelected(view: cell, cellState: cellState)
         renderCellTextColor(view: cell, cellState: cellState)
+        renderCellEvents(view: cell, cellState: cellState)
+        
         cell.layoutIfNeeded()
     }
     
@@ -126,6 +153,7 @@ extension ViewController: JTAppleCalendarViewDelegate{
         
         renderCellSelected(view: cell, cellState: cellState)
         renderCellTextColor(view: cell, cellState: cellState)
+        renderCellEvents(view: cell, cellState: cellState)
         
         return cell
     }
