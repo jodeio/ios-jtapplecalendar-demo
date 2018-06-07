@@ -98,9 +98,9 @@ class ViewController: UIViewController {
         formatter.dateFormat = "yyyy/MM/dd"
         if(events.count > 0){
             if(events.contains(formatter.string(from: cellState.date))){
-                validCell.vEventIndicator = true
+                validCell.vEventIndicator.isHidden = false
             }else{
-                validCell.vEventIndicator = false
+                validCell.vEventIndicator.isHidden = true
             }
         }
     }
