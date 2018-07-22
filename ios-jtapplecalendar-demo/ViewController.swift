@@ -20,6 +20,9 @@ class ViewController: UIViewController {
     var events = [[Event]]()
     let formatter = DateFormatter()
     
+    // MARK: - Date Event Specific Changes
+    var selectedEventIndex = -1 // Default if no events it set for the selected date
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,15 +40,32 @@ class ViewController: UIViewController {
     
     // MARK: - Event Population
     private func populateEvents(){
+        // Group dates by day (specific date)
         // Local events assigning
         formatter.dateFormat = "yyyy/MM/dd"
         events.append([
                     Event(name: "Independence Day", date: formatter.date(from: "2018/06/12"), type: Keys.HOLIDAY),
-                    Event(name: "Mark's Birthday", date: formatter.date(from: "2018/06/12"), type: Keys.BIRTHDAY)
+                    Event(name: "Mark's Birthday", date: formatter.date(from: "2018/06/12"), type: Keys.BIRTHDAY),
                 ]
             )
+        
         events.append([
                     Event(name: "Eid al Fitr", date: formatter.date(from: "2018/06/15"), type: Keys.SPECIAL_HOLIDAY)
+            ]
+        )
+
+        events.append([
+                    Event(name: "Test Holiday", date: formatter.date(from: "2018/07/12"), type: Keys.SPECIAL_HOLIDAY),
+                    Event(name: "Test Birthday", date: formatter.date(from: "2018/07/12"), type: Keys.BIRTHDAY),
+                    Event(name: "Test Birthday 2", date: formatter.date(from: "2018/07/12"), type: Keys.BIRTHDAY),
+                    Event(name: "Test Birthday 3", date: formatter.date(from: "2018/07/12"), type: Keys.BIRTHDAY)
+            ]
+        )
+
+        
+        events.append([
+                    Event(name: "Test Holiday", date: formatter.date(from: "2018/07/15"), type: Keys.SPECIAL_HOLIDAY),
+                    Event(name: "Test Birthday", date: formatter.date(from: "2018/07/15"), type: Keys.BIRTHDAY)
                 ]
             )
         
@@ -105,36 +125,42 @@ class ViewController: UIViewController {
             validCell.vSelected.isHidden = true
             validCell.backgroundColor = UIColor.clear
         }
+        
     }
     
+    // Render events styles on the calendar
     private func renderCellEvents(view: JTAppleCell, cellState: CellState){
         guard let validCell = view as? CalendarCell else { return }
         formatter.dateFormat = "yyyy/MM/dd"
-        // let index = getEventDateIndex(date: cellState.date)
-        if(events.count > 0){
-            // FIXME: - Replace 0 by index when fixed
-            if(events.contains { $0[0].date == cellState.date }){
-                validCell.vEventIndicator.isHidden = false
-                
-                // Add ons: Check event type here
-            }else{
-                validCell.vEventIndicator.isHidden = true
-            }
+        let index = getEventDateIndex(date: cellState.date)
+        
+        if(events.count > 0 && index != -1 && events[index].contains { $0.date == cellState.date }){
+            validCell.vEventIndicator.isHidden = false
+        }else{
+            validCell.vEventIndicator.isHidden = true
         }
     }
     
-    // FIXME: - Validate index retrieval
+    // Validates if the current date has events
     private func getEventDateIndex(date: Date) -> Int{
         var index = 0
         for i in 0..<events.count{
             for j in 0..<events[i].count{
                 if(events[i][j].date == date){
                     index = i
-                    break
+                    return index
                 }
             }
         }
-        return index
+        return -1
+    }
+    
+    // Sets selected event details
+    private func setSelectedEventIndex(selectedEventIndex: Int) {
+        self.selectedEventIndex = selectedEventIndex
+        
+        // Reload EventsTableView
+        tvEvents.reloadData()
     }
 }
 
@@ -218,6 +244,8 @@ extension ViewController: JTAppleCalendarViewDelegate{
         renderCellTextColor(view: cell, cellState: cellState)
         
         cell?.bounce()
+        
+        setSelectedEventIndex(selectedEventIndex: getEventDateIndex(date: date))
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
@@ -225,19 +253,21 @@ extension ViewController: JTAppleCalendarViewDelegate{
         renderCellTextColor(view: cell, cellState: cellState)
         
         cell?.bounce()
+        
+        setSelectedEventIndex(selectedEventIndex: getEventDateIndex(date: date))
     }
 }
 
 // TableViewDelegateProtocol
 extension ViewController: UITableViewDelegate{
-    
+
 }
 
 // TableViewDataSourceProtocol
 extension ViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // FIXME: - Replace 0 by index when fixed
-        return events[0].count
+        // If there is no events for the selected date (-1 const), the default value will be assigned to 0 count
+        return selectedEventIndex == -1 ? 0 : events[selectedEventIndex].count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -246,6 +276,10 @@ extension ViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell", for: indexPath) as! EventTableViewCell
+
+        formatter.dateFormat = "yyyy MM dd"
+        cell.lbEventName.text = events[selectedEventIndex][indexPath.row].name
+        cell.lbEventDate.text = formatter.string(from: events[selectedEventIndex][indexPath.row].date)
         
         return cell
     }
