@@ -13,3 +13,12 @@ class Keys{
     static let HOLIDAY = "HOLIDAY"
     static let SPECIAL_HOLIDAY = "SPECIAL_HOLIDAY"
 }
+
+class DataSet {
+    static let LOCAL = "LOCAL"
+    static let REMOTE = "REMOTE"
+}
+
+class API{
+    static let EVENTS = "http://api.jsonbin.io/b/5b5446714d5ea95c8ba7f3e4/4"
+}

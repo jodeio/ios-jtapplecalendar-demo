@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4154721C2D50C8A51430BDAA /* Pods_ios_jtapplecalendar_demoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 402A993664FF32EA0F203731 /* Pods_ios_jtapplecalendar_demoTests.framework */; };
+		6325953921047E37004E0561 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6325953821047E37004E0561 /* Events.swift */; };
+		6325953B21047E56004E0561 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6325953A21047E56004E0561 /* Response.swift */; };
 		633A45B820C8FC5E0054406E /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633A45B720C8FC5E0054406E /* EventTableViewCell.swift */; };
 		633A45BB20C8FDB20054406E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633A45BA20C8FDB20054406E /* Event.swift */; };
 		633A45BF20C905C70054406E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633A45BE20C905C70054406E /* Constants.swift */; };
@@ -52,6 +54,8 @@
 		402A993664FF32EA0F203731 /* Pods_ios_jtapplecalendar_demoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_jtapplecalendar_demoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		494691FB2A04B548F1BE6FD8 /* Pods_ios_jtapplecalendar_demoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_jtapplecalendar_demoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		615D3F8176BBCECA36D2766C /* Pods-ios-jtapplecalendar-demoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-jtapplecalendar-demoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-jtapplecalendar-demoTests/Pods-ios-jtapplecalendar-demoTests.release.xcconfig"; sourceTree = "<group>"; };
+		6325953821047E37004E0561 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		6325953A21047E56004E0561 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		633A45B720C8FC5E0054406E /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		633A45BA20C8FDB20054406E /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		633A45BE20C905C70054406E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -118,7 +122,9 @@
 		633A45B920C8FD9F0054406E /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				6325953A21047E56004E0561 /* Response.swift */,
 				633A45BA20C8FDB20054406E /* Event.swift */,
+				6325953821047E37004E0561 /* Events.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -364,11 +370,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ios-jtapplecalendar-demo/Pods-ios-jtapplecalendar-demo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -512,6 +524,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				633A45B820C8FC5E0054406E /* EventTableViewCell.swift in Sources */,
+				6325953921047E37004E0561 /* Events.swift in Sources */,
 				633A45BB20C8FDB20054406E /* Event.swift in Sources */,
 				637E7C6520C7A8A2007BC3D1 /* ViewController.swift in Sources */,
 				637E7C9E20C7DA2A007BC3D1 /* Color.swift in Sources */,
@@ -521,6 +534,7 @@
 				637E7C9820C7D076007BC3D1 /* CalendarHeader.swift in Sources */,
 				637E7C6320C7A8A2007BC3D1 /* AppDelegate.swift in Sources */,
 				637E7C9B20C7D948007BC3D1 /* UIColor.swift in Sources */,
+				6325953B21047E56004E0561 /* Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,12 +1,22 @@
 PODS:
+  - Alamofire (4.7.2)
+  - AlamofireObjectMapper (5.0.0):
+    - Alamofire (~> 4.1)
+    - ObjectMapper (~> 3.0)
   - JTAppleCalendar (7.1.5)
+  - ObjectMapper (3.2.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.7)
+  - AlamofireObjectMapper
   - JTAppleCalendar (~> 7.0)
 
 SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  AlamofireObjectMapper: 5fafc816351cbbc0d486611aaeba7461c0cbad49
   JTAppleCalendar: 2d4f974f9f3c8b4964d51ca1f6e004883c031fbe
+  ObjectMapper: 5cccd2de6f253eda859df8116a5a554d9769e859
 
-PODFILE CHECKSUM: 6e43c997bf4a60b0ad05b45674b3786ef4265efe
+PODFILE CHECKSUM: c0ac6fd0747aee554381d7578d33c75650df8721
 
 COCOAPODS: 1.4.0

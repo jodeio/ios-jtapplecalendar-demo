@@ -7,6 +7,8 @@ target 'ios-jtapplecalendar-demo' do
 
   # Pods for ios-jtapplecalendar-demo
   pod 'JTAppleCalendar', '~> 7.0'
+  pod 'AlamofireObjectMapper'
+  pod 'Alamofire', '~> 4.7'
 
   target 'ios-jtapplecalendar-demoTests' do
     inherit! :search_paths

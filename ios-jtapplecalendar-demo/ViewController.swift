@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireObjectMapper
 import JTAppleCalendar
 
 class ViewController: UIViewController {
@@ -23,14 +25,15 @@ class ViewController: UIViewController {
     // MARK: - Date Event Specific Changes
     var selectedEventIndex = -1 // Default if no events it set for the selected date
     
+    // MARK: - Toggle between Local and API Data
+    var dataSet = DataSet.REMOTE
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         // MARK: Initialization
         populateEvents()
-        scrollToDateToday()
-        setUpVisibleDates()
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,37 +44,69 @@ class ViewController: UIViewController {
     // MARK: - Event Population
     private func populateEvents(){
         // Group dates by day (specific date)
-        // Local events assigning
-        formatter.dateFormat = "yyyy/MM/dd"
-        events.append([
-                    Event(name: "Independence Day", date: formatter.date(from: "2018/06/12"), type: Keys.HOLIDAY),
-                    Event(name: "Mark's Birthday", date: formatter.date(from: "2018/06/12"), type: Keys.BIRTHDAY),
+        if(dataSet == DataSet.LOCAL){
+            // Local events assigning
+            formatter.dateFormat = "yyyy/MM/dd"
+            events.append([
+                    Event(name: "Independence Day", date: "2018/06/12", type: Keys.HOLIDAY),
+                    Event(name: "Mark's Birthday", date: "2018/06/12", type: Keys.BIRTHDAY),
                 ]
             )
-        
-        events.append([
-                    Event(name: "Eid al Fitr", date: formatter.date(from: "2018/06/15"), type: Keys.SPECIAL_HOLIDAY)
-            ]
-        )
-
-        events.append([
-                    Event(name: "Test Holiday", date: formatter.date(from: "2018/07/12"), type: Keys.SPECIAL_HOLIDAY),
-                    Event(name: "Test Birthday", date: formatter.date(from: "2018/07/12"), type: Keys.BIRTHDAY),
-                    Event(name: "Test Birthday 2", date: formatter.date(from: "2018/07/12"), type: Keys.BIRTHDAY),
-                    Event(name: "Test Birthday 3", date: formatter.date(from: "2018/07/12"), type: Keys.BIRTHDAY)
-            ]
-        )
-
-        
-        events.append([
-                    Event(name: "Test Holiday", date: formatter.date(from: "2018/07/15"), type: Keys.SPECIAL_HOLIDAY),
-                    Event(name: "Test Birthday", date: formatter.date(from: "2018/07/15"), type: Keys.BIRTHDAY)
+            
+            events.append([
+                    Event(name: "Eid al Fitr", date: "2018/06/15", type: Keys.SPECIAL_HOLIDAY)
                 ]
             )
+            
+            events.append([
+                    Event(name: "Test Holiday", date: "2018/07/12", type: Keys.SPECIAL_HOLIDAY),
+                    Event(name: "Test Birthday", date: "2018/07/12", type: Keys.BIRTHDAY),
+                    Event(name: "Test Birthday 2", date: "2018/07/12", type: Keys.BIRTHDAY),
+                    Event(name: "Test Birthday 3", date: "2018/07/12", type: Keys.BIRTHDAY)
+                ]
+            )
+            
+            events.append([
+                    Event(name: "Test Holiday", date: "2018/07/15", type: Keys.SPECIAL_HOLIDAY),
+                    Event(name: "Test Birthday", date: "2018/07/15", type: Keys.BIRTHDAY)
+                ]
+            )
+            
+            scrollToDateToday()
+            setUpVisibleDates()
+        }
         
         // You can call your api to append dates to the events array here
-        // Be minded with the format
+        else if(dataSet == DataSet.REMOTE){
+            Alamofire
+                .request(API.EVENTS)
+                // Map events object
+                .responseObject{ (response: DataResponse<ResponseArray<Events>>) in
+                    let statusResponse = response.result.value
+                    switch response.result {
+                    case .success:
+                        if(statusResponse?.statusCode == 200){
+                            self.populateEventsViaRemoteCall(data: (statusResponse?.results)!)
+                        }
+                    case .failure(let error):
+                        print("\(error)")
+                    }
+                }
+        }
     }
+    
+    // MARK: Populate events via remote call
+    private func populateEventsViaRemoteCall(data: [Events]){
+        // Logic to populate dates with events
+        data.forEach { date in
+            events.append(date.events)
+        }
+        
+        // Render calendar
+        scrollToDateToday()
+        setUpVisibleDates()
+    }
+    
     
     // MARK: - Render Calendar
     private func scrollToDateToday(){
@@ -87,9 +122,7 @@ class ViewController: UIViewController {
     private func setUpCalendarViews(from visibleDates: DateSegmentInfo){
         let date = visibleDates.monthDates.first!.date
         formatter.dateFormat = "yyyy"
-        print("Year: \(formatter.string(from: date))")
         formatter.dateFormat = "MMMM"
-        print("Month: \(formatter.string(from: date))")
     }
     
     private func renderCellTextColor(view: JTAppleCell?, cellState: CellState) {
@@ -134,7 +167,7 @@ class ViewController: UIViewController {
         formatter.dateFormat = "yyyy/MM/dd"
         let index = getEventDateIndex(date: cellState.date)
         
-        if(events.count > 0 && index != -1 && events[index].contains { $0.date == cellState.date }){
+        if(events.count > 0 && index != -1 && events[index].contains { formatter.date(from: $0.date) == cellState.date }){
             validCell.vEventIndicator.isHidden = false
         }else{
             validCell.vEventIndicator.isHidden = true
@@ -143,10 +176,11 @@ class ViewController: UIViewController {
     
     // Validates if the current date has events
     private func getEventDateIndex(date: Date) -> Int{
+        formatter.dateFormat = "yyyy/MM/dd"
         var index = 0
         for i in 0..<events.count{
             for j in 0..<events[i].count{
-                if(events[i][j].date == date){
+                if(formatter.date(from: events[i][j].date) == date){
                     index = i
                     return index
                 }
@@ -279,7 +313,7 @@ extension ViewController: UITableViewDataSource{
 
         formatter.dateFormat = "yyyy MM dd"
         cell.lbEventName.text = events[selectedEventIndex][indexPath.row].name
-        cell.lbEventDate.text = formatter.string(from: events[selectedEventIndex][indexPath.row].date)
+        cell.lbEventDate.text = events[selectedEventIndex][indexPath.row].date
         
         return cell
     }

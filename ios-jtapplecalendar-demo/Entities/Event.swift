@@ -6,10 +6,23 @@
 //  Copyright © 2018 xrojan. All rights reserved.
 //
 
-import Foundation
+import ObjectMapper
 
 struct Event{
     var name: String!
-    var date: Date!
+    var date: String!
     var type: String!
+}
+
+
+extension Event: Mappable {
+    init?(map: Map) {
+        //
+    }
+    
+    mutating func mapping(map: Map) {
+        name <- map["name"]
+        date <- map["date"]
+        type <- map["type"]
+    }
 }
